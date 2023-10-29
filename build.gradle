@@ -1,9 +1,11 @@
 import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
-    id 'io.github.juuxel.loom-quiltflower' version '1.10.0'
+    id 'fabric-loom' version '1.3-SNAPSHOT'
+    id("io.github.juuxel.loom-vineflower") version "1.11.0"
     id 'org.ajoberstar.grgit' version '4.1.0'
+    id "fr.stardustenterprises.rust.importer" version "2.1.0"
+    id "fr.stardustenterprises.rust.wrapper" version "2.1.0" apply false
 }
 
 apply from: "${rootProject.projectDir}/gradle/fabric.gradle"
@@ -40,13 +42,6 @@ sourceSets {
     }
 }
 
-tasks.register('buildNatives') {
-    exec {
-        workingDir '.\\native\\core\\'
-        commandLine 'cargo', 'build', '--profile', 'production'
-    }
-}
-
 tasks.register('apiJar', Jar) {
     archiveClassifier.set "api-dev"
 
@@ -63,11 +58,24 @@ tasks.register('remapApiJar', RemapJarTask) {
 
 build.dependsOn apiJar
 build.dependsOn remapApiJar
-build.dependsOn buildNatives
 
 jar {
     from sourceSets.api.output.classesDirs
     from sourceSets.api.output.resourcesDir
+}
+
+tasks {
+    processResources {
+        finalizedBy("unpackExports")
+    }
+
+    jar {
+        dependsOn("unpackExports")
+    }
+
+    runClient {
+        dependsOn("unpackExports")
+    }
 }
 
 dependencies {
@@ -81,28 +89,15 @@ dependencies {
     modIncludeImplementation(fabricApi.module("fabric-rendering-fluids-v1", project.fabric_version))
     modIncludeImplementation(fabricApi.module("fabric-rendering-data-attachment-v1", project.fabric_version))
     modIncludeImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_version))
+
+    rustImport(project(":core"))
 }
 
 def getVersionMetadata() {
-    def build_id = System.getenv("GITHUB_RUN_NUMBER")
+    return "-rust"
+}
 
-    // CI builds only
-    if (build_id != null) {
-        return "build.${build_id}"
-    }
-
-    if (grgit != null) {
-        def head = grgit.head()
-        def id = head.abbreviatedId
-
-        // Flag the build if the build tree is not clean
-        if (!grgit.status().clean) {
-            id += "-dirty"
-        }
-
-        return "rev.${id}"
-    }
-
-    // No tracking information could be found about the build
-    return "unknown"
+tasks.register("unpackExports", Copy) {
+    from zipTree("build/resources/main/export.zip")
+    into layout.buildDirectory.dir("resources/main")
 }

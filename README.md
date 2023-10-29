@@ -1,4 +1,4 @@
-<img src="src/main/resources/assets/sodium/icon.png" width="128">
+<img src="fabric/main/resources/assets/sodium/icon.png" width="128">
 
 # Sodium (for Fabric)
 ![GitHub license](https://img.shields.io/github/license/CaffeineMC/sodium-fabric.svg)
