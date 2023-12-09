@@ -312,6 +312,10 @@ public class QuadViewImpl implements QuadView, ModelQuadView {
     }
 
     @Override
+    public Direction getLightFace() {
+        return null;
+    }
+
     public int getNormal() {
         throw new UnsupportedOperationException("Not available for QuadViewImpl.");
     }

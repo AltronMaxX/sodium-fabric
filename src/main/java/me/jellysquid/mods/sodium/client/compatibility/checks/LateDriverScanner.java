@@ -4,6 +4,7 @@ import me.jellysquid.mods.sodium.client.compatibility.workarounds.nvidia.NvidiaD
 import me.jellysquid.mods.sodium.client.gui.console.Console;
 import me.jellysquid.mods.sodium.client.gui.console.message.MessageLevel;
 import me.jellysquid.mods.sodium.client.compatibility.environment.GLContextInfo;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;

@@ -213,8 +213,8 @@ public abstract class MutableQuadViewImpl extends QuadViewImpl implements QuadEm
         // Copy geometry cached inside the quad
         BakedQuadView view = (BakedQuadView) quad;
 
-        NormalHelper.unpackNormal(view.getNormal(), faceNormal);
-        data[baseIndex + HEADER_FACE_NORMAL] = view.getNormal();
+        NormalHelper.unpackNormal(view.getNormalFace().ordinal(), faceNormal);
+        data[baseIndex + HEADER_FACE_NORMAL] = view.getNormalFace().ordinal();
         data[baseIndex + HEADER_BITS] = EncodingFormat.lightFace(data[baseIndex + HEADER_BITS], view.getLightFace());
         data[baseIndex + HEADER_BITS] = EncodingFormat.geometryFlags(data[baseIndex + HEADER_BITS], view.getFlags());
         isGeometryInvalid = false;
