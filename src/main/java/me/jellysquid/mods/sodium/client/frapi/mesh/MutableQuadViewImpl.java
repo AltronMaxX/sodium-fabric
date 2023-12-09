@@ -17,6 +17,7 @@
 package me.jellysquid.mods.sodium.client.frapi.mesh;
 
 import me.jellysquid.mods.sodium.client.model.quad.BakedQuadView;
+import net.caffeinemc.mods.sodium.api.math.MatrixHelper;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadView;
@@ -213,8 +214,8 @@ public abstract class MutableQuadViewImpl extends QuadViewImpl implements QuadEm
         // Copy geometry cached inside the quad
         BakedQuadView view = (BakedQuadView) quad;
 
-        NormalHelper.unpackNormal(view.getNormalFace().ordinal(), faceNormal);
-        data[baseIndex + HEADER_FACE_NORMAL] = view.getNormalFace().ordinal();
+        NormalHelper.unpackNormal(view.getLightFace().ordinal(), faceNormal);
+        data[baseIndex + HEADER_FACE_NORMAL] = view.getLightFace().ordinal();
         data[baseIndex + HEADER_BITS] = EncodingFormat.lightFace(data[baseIndex + HEADER_BITS], view.getLightFace());
         data[baseIndex + HEADER_BITS] = EncodingFormat.geometryFlags(data[baseIndex + HEADER_BITS], view.getFlags());
         isGeometryInvalid = false;
