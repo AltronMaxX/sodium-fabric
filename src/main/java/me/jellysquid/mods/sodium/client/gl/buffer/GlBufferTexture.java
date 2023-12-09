@@ -3,8 +3,7 @@ package me.jellysquid.mods.sodium.client.gl.buffer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.jellysquid.mods.sodium.client.gl.device.CommandList;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL31;
+import org.lwjgl.opengl.GL46;
 
 import java.nio.ByteBuffer;
 
@@ -30,8 +29,8 @@ public class GlBufferTexture {
     }
 
     public void bind() {
-        GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER, this.glTexHandle);
-        GL31.glTexBuffer(GL31.GL_TEXTURE_BUFFER, GL31.GL_R32UI, this.buffer.getObjectHandle());
+        GL46.glBindTexture(GL46.GL_TEXTURE_BUFFER, this.glTexHandle);
+        GL46.glTexBuffer(GL46.GL_TEXTURE_BUFFER, GL46.GL_R32UI, this.buffer.getObjectHandle());
         RenderSystem.setShaderTexture(this.textureNum, this.glTexHandle);
     }
 }

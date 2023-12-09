@@ -7,9 +7,8 @@ import me.jellysquid.mods.sodium.client.gl.shader.uniform.GlUniformMatrix4f;
 import me.jellysquid.mods.sodium.client.render.chunk.shader.ShaderBindingContext;
 import me.jellysquid.mods.sodium.client.util.TextureUtil;
 import org.joml.Matrix4fc;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL31;
-import org.lwjgl.opengl.GL32C;
+import org.lwjgl.opengl.GL46;
+import org.lwjgl.opengl.GL46C;
 
 public class ParticleShaderInterface {
     private final GlUniformInt uniformParticleTexture;
@@ -45,29 +44,29 @@ public class ParticleShaderInterface {
     }
 
     private void bindParticleTexture(ParticleShaderTextureSlot slot, int textureId) {
-        GlStateManager._activeTexture(GL32C.GL_TEXTURE0 + slot.ordinal());
+        GlStateManager._activeTexture(GL46C.GL_TEXTURE0 + slot.ordinal());
         GlStateManager._bindTexture(textureId);
 
         uniformParticleTexture.setInt(slot.ordinal());
     }
 
     private void bindLightTexture(ParticleShaderTextureSlot slot, int textureId) {
-        GlStateManager._activeTexture(GL32C.GL_TEXTURE0 + slot.ordinal());
+        GlStateManager._activeTexture(GL46C.GL_TEXTURE0 + slot.ordinal());
         GlStateManager._bindTexture(textureId);
 
         uniformLightTexture.setInt(slot.ordinal());
     }
 
     private void bindParticleData(ParticleShaderTextureSlot slot, int textureId) {
-        GlStateManager._activeTexture(GL32C.GL_TEXTURE0 + slot.ordinal());
-        GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER, textureId);
+        GlStateManager._activeTexture(GL46C.GL_TEXTURE0 + slot.ordinal());
+        GL46.glBindTexture(GL46.GL_TEXTURE_BUFFER, textureId);
 
         uniformParticleData.setInt(slot.ordinal());
     }
 
     private void bindTextureCache(ParticleShaderTextureSlot slot, int textureId) {
-        GlStateManager._activeTexture(GL32C.GL_TEXTURE0 + slot.ordinal());
-        GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER, textureId);
+        GlStateManager._activeTexture(GL46C.GL_TEXTURE0 + slot.ordinal());
+        GL46.glBindTexture(GL46.GL_TEXTURE_BUFFER, textureId);
 
         uniformTextureCache.setInt(slot.ordinal());
     }

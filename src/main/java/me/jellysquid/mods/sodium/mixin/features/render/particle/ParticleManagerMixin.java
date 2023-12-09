@@ -26,8 +26,8 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20C;
+import org.lwjgl.opengl.GL46;
+import org.lwjgl.opengl.GL46C;
 import org.lwjgl.system.MemoryStack;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -282,15 +282,15 @@ public abstract class ParticleManagerMixin {
         if (sheet == ParticleTextureSheet.TERRAIN_SHEET || sheet == ParticleTextureSheet.PARTICLE_SHEET_LIT || sheet == ParticleTextureSheet.PARTICLE_SHEET_OPAQUE || sheet == ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT) {
             uploadParticleBuffer(commands);
             bindDummyVao();
-            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, numParticles * 6);
+            GL46.glDrawArrays(GL46.GL_TRIANGLES, 0, numParticles * 6);
         }
     }
 
     @Unique
     private void bindDummyVao() {
         GlStateManager._glBindVertexArray(this.glVertexArray);
-        GL20C.glVertexAttribPointer(0, 1, GlVertexAttributeFormat.UNSIGNED_BYTE.typeId(), false, 1, 0);
-        GL20C.glEnableVertexAttribArray(0);
+        GL46C.glVertexAttribPointer(0, 1, GlVertexAttributeFormat.UNSIGNED_BYTE.typeId(), false, 1, 0);
+        GL46C.glEnableVertexAttribArray(0);
     }
 
     @Unique
